@@ -1,0 +1,226 @@
+@function number($value) {
+  @if type-of($value) == 'number' {
+    @return $value;
+  } @else if type-of($value) != 'string' {
+    $_: log('Value for `to-number` should be a number or a string.');
+  }
+
+  $result: 0;
+  $digits: 0;
+  $minus: str-slice($value, 1, 1) == '-';
+  $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
+
+  @for $i from if($minus, 2, 1) through str-length($value) {
+    $character: str-slice($value, $i, $i);
+
+    @if not (index(map-keys($numbers), $character) or $character == '.') {
+      @return to-length(if($minus, -$result, $result), str-slice($value, $i))
+    }
+
+    @if $character == '.' {
+      $digits: 1;
+    } @else if $digits == 0 {
+      $result: $result * 10 + map-get($numbers, $character);
+    } @else {
+      $digits: $digits * 10;
+      $result: $result + map-get($numbers, $character) / $digits;
+    }
+  }
+
+  @return if($minus, -$result, $result);
+}
+
+// @Author Hugo Giraudel
+// https://css-tricks.com/snippets/sass/advanced-type-checking/
+@function is-number($value) {
+  @return type-of($value) == 'number';
+}
+
+@function is-time($value) {
+  @return is-number($value) and index('ms' 's', unit($value)) != null;
+}
+
+@function is-duration($value) {
+  @return is-time($value);
+}
+
+@function is-angle($value) {
+  @return is-number($value) and index('deg' 'rad' 'grad' 'turn', unit($value)) != null;
+}
+
+@function is-frequency($value) {
+  @return is-number($value) and index('Hz' 'kHz', unit($value)) != null;
+}
+
+@function is-integer($value) {
+  @return is-number($value) and round($value) == $value;
+}
+
+@function is-relative-length($value) {
+  @return is-number($value) and index('em' 'ex' 'ch' 'rem' 'vw' 'vh' 'vmin' 'vmax', unit($value)) != null;
+}
+
+@function is-absolute-length($value) {
+  @return is-number($value) and index('cm' 'mm' 'in' 'px' 'pt' 'pc', unit($value)) != null;
+}
+
+@function is-percentage($value) {
+  @return is-number($value) and unit($value) == '%';
+}
+
+@function is-length($value) {
+  @return is-relative-length($value) or is-absolute-length($value);
+}
+
+@function is-resolution($value) {
+  @return is-number($value) and index('dpi' 'dpcm' 'dppx', unit($value)) != null;
+}
+
+@function is-position($value) {
+  @return is-length($value) or is-percentage($value) or index('top' 'right' 'bottom' 'left' 'center', $value) != null;
+}
+
+@function is-unit-of-type($value, $units){
+  @return is-number($value) and index($units, unit($value)) != null;
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function px-to-rem($size) {
+  @if is-unit-of-type($size, 'px') {
+    //@return $size / 16px * 1rem;
+    @return (strip-unit($size) * 1rem) / $font-size-unit-ratio
+  }@else{
+    @return $size;
+  }
+}
+
+// @Author Martijn Cuppens
+// https://gist.github.com/MartijnCuppens/3e9857732967089550aacfd2403ed363
+// Split a value from margin or padding in top/right/bottom/left values
+//
+// input: 14px 45px
+// output:
+// (
+//   "top": 14px,
+//   "right": 45px,
+//   "bottom": 14px,
+//   "left": 45px,
+// );
+//
+// input: 0 5px 7px
+// output:
+// (
+//   "top": 0,
+//   "right": 5px,
+//   "bottom": 7px,
+//   "left": 5px,
+// );
+//
+@function split-value($args:()) {
+  @if length($args) == 1 {
+    @return (
+            "top": nth($args, 1),
+            "right": nth($args, 1),
+            "bottom": nth($args, 1),
+            "left": nth($args, 1),
+    );
+  }
+  @else if length($args) == 2 {
+    @return (
+            "top": nth($args, 1),
+            "right": nth($args, 2),
+            "bottom": nth($args, 1),
+            "left": nth($args, 2),
+    );
+  }
+  @else if length($args) == 3 {
+    @return (
+            "top": nth($args, 1),
+            "right": nth($args, 2),
+            "bottom": nth($args, 3),
+            "left": nth($args, 2),
+    );
+  }
+  @else if length($args) == 4 {
+    @return (
+            "top": nth($args, 1),
+            "right": nth($args, 2),
+            "bottom": nth($args, 3),
+            "left": nth($args, 4),
+    );
+  }
+  @else {
+    @return (
+            "top": nth($args, 1),
+            "right": nth($args, 2),
+            "bottom": nth($args, 3),
+            "left": nth($args, 4),
+    );
+  }
+}
+
+// Custom functions
+@function parse-font-size($size){
+    //@if $enable-responsive-font-sizes {
+      @return px-to-rem($size); // Assumes the browser default, typically `16px`
+    //}
+    //@return $size;
+}
+
+@function split-border($args){
+  @if length($args) == 1 {
+    @return (
+            "width": nth($args, 1),
+            "style": null,
+            "color": null
+    );
+  }@else if length($args) == 2{
+    @return (
+            "width": nth($args, 1),
+            "style": nth($args, 2),
+            "color": null
+    );
+  }@else if length($args) == 3{
+    @return (
+            "width": nth($args, 1),
+            "style": nth($args, 2),
+            "color": nth($args, 3)
+    );
+  }@else {
+    $error: unquote("split-border function expects 1, 2, or 3 values, got " + length($args) + ": (");
+    @each $arg in $args {
+      $error: $error #{$arg};
+      @if $arg != nth($args, length($args)) {
+        $error: $error unquote(",");
+      }
+    }
+    $error: $error unquote(")");
+    @error $error;
+  }
+}
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@function parse-font-family($args){
+  @if type-of($args) == 'list'{
+    @return join($args,(),$separator:comma);
+  }@else if type-of($args) == 'string' {
+    @return str-replace(str-replace($args, ',', ' '), ' ', ', ');
+  }
+  @return $args;
+}

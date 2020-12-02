@@ -1,0 +1,16 @@
+/**
+ * Bootstrap v4.5.3 build for Magento 2
+ * @author Ciro Arcadio <ciro.arcadio@dnafactory.it>
+ * See LICENSE for license details.
+ */
+
+//@vars_import (lib) 'source/lib/_lib.less';
+//@vars_import 'source/_variables.less';
+//@vars_import 'source/_theme.less';
+
+@import 'source/scss/_functions.scss';
+@import 'source/scss/themes/_magento.scss';
+@import "source/scss/themes/_extends.scss";
+@import 'source/bootstrap/bootstrap.scss';
+@import 'source/scss/_extends.scss';
+//@magento_import "source/scss/_extend.scss";

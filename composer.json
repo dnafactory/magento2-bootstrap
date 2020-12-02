@@ -1,0 +1,32 @@
+{
+  "name": "dnafactory/module-bootstrap",
+  "type": "magento2-module",
+  "description": "Magento 2 Bootstrap source integration",
+  "keywords": ["Magento2","Bootstrap"],
+  "license": [
+    "BSD-3-Clause"
+  ],
+  "require": {
+    "php": "~7.1|~7.2",
+    "dnafactory/module-scss": "^1.0"
+  },
+  "authors": [
+    {
+      "name": "DNAFactory",
+      "email": "info@dnafactory.it",
+      "homepage": "https://www.dnafactory.it",
+      "role": "Owner"
+    },
+    {
+      "name": "Ciro Arcadio",
+      "email": "ciro.arcadio@dnafactory.it",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "DNAFactory\\Bootstrap\\": ""
+    }
+  }
+}

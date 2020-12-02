@@ -1,0 +1,28 @@
+{
+  "name": "dnafactory_bootstrap-magento2",
+  "version": "1.0.0",
+  "description": "Dev dependencies and version references",
+  "main": "index.js",
+  "scripts": {
+    "copy-scss": "cross-env-shell shx rm -rf view/frontend/web/css/source/bootstrap/* && cp -rf node_modules/bootstrap/scss/* view/frontend/web/css/source/bootstrap",
+    "copy-js": "npm-run-all --parallel copy-js-bootstrap copy-js-vendor",
+    "copy-js-bootstrap": "cross-env-shell shx rm -rf view/frontend/web/js/bootstrap/* && cp -rf node_modules/bootstrap/js/dist/* view/frontend/web/js/bootstrap",
+    "copy-js-vendor": "cross-env-shell shx rm -rf view/frontend/web/js/vendor/* && cp -rf node_modules/popper.js/dist/umd/popper.js* view/frontend/web/js/vendor",
+    "replace-imports": "replace '\\.\\/(.*)\\.js' 'bs.$1' view/frontend/web/js/bootstrap/*.js -rq",
+    "update-src": "npm-run-all --parallel copy-scss copy-js --sequential replace-imports"
+  },
+  "keywords": [
+    "Magento2",
+    "Bootstrap"
+  ],
+  "author": "Ciro Arcadio <ciro.arcadio@dnafactory.it>",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "bootstrap": "^4.5.3",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "popper.js": "^1.16.1",
+    "replace": "^1.2.0",
+    "shx": "^0.3.3"
+  }
+}
