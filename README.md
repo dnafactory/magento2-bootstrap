@@ -1,7 +1,6 @@
 ## Bootstrap source integration for Magento 2
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=for-the-badge)](https://opensource.org/licenses/BSD-3-Clause)
 [![Magento](https://img.shields.io/badge/Bootstrap-v4.5.3-blueviolet.svg?logo=bootstrap&&style=for-the-badge)](https://github.com/twbs/bootstrap)
-
 ======
 
 This Magento 2 module provides a full integration of [Bootstrap 4](https://getbootstrap.com/) 's sources.
@@ -37,6 +36,16 @@ Just put your .less theme variables file reference in **source/scss/themes/_exte
 ```scss
 // @vars_import 'source/my_marvellous_theme/_variables.less';
 ```
+or, when your variables file is stored in a theme-level directory (most common case):
+```scss
+//@vars_import (lib) 'relative_path_to_theme_base_css_dir/_variables.less'
+```
+For example, using
+```scss
+//@vars_import (lib) '../../_variables.less'
+```
+from **view/frontend/web/css/source/scss/themes/_magento.scss**, it will point to **YourVendor/YourTheme/your_locale/css/source**.
+
 Refer to [dnafactory/module-scss's doc](https://github.com/dnafactory/magento2-module-scss), for more info about the *@vars_import* directive.
 
 ### How to use JS
