@@ -1,3 +1,40 @@
 //
 //  Scss Customizations
 //  _____________________________________________
+
+input:not([type=button]):not([type=submit]){
+  @include transition($input-transition);
+}
+.btn-primary{
+  @include button-variant(theme-color("primary"), theme-color("primary"), $button-primary__hover__background, map-get(split-border($button-primary__hover__border),'color'), $button-primary__active__background, map-get(split-border($button-primary__active__border),'color'));
+}
+button.action{
+  &.primary {
+    @extend .btn-primary;
+  }
+
+  &.secondary {
+    @extend .btn-secondary;
+  }
+  outline: 0;
+  @include transition($btn-transition);
+}
+
+@each $breakpoint, $gutter in $grid-gutter-widths {
+  @include media-breakpoint-up($breakpoint) {
+    .container,
+    .container-fluid{
+      @include make-container($gutter);
+    }
+    .container#{breakpoint-infix($breakpoint, $grid-gutter-widths)} {
+      @include make-container($gutter);
+    }
+    .row{
+      @include make-row($gutter);
+      & > .col,
+      & > [class*='col-']{
+        @include make-col-ready($gutter);
+      }
+    }
+  }
+}

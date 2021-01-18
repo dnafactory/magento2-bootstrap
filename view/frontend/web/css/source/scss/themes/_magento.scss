@@ -42,10 +42,10 @@ $cyan:    #17a2b8;
 
 $primary:       $theme__color__primary;
 $secondary:     $theme__color__secondary;
-$success:       $message-success__color;
-$info:          $message-info__color;
-$warning:       $message-warning__color;
-$danger:        $message-error__color;
+$success:       $message-success__background;
+$info:          $message-info__background;
+$warning:       $message-warning__background;
+$danger:        $message-error__background;
 $light:         $secondary__color;
 $dark:          $primary__color;
 
@@ -116,11 +116,13 @@ $paragraph-margin-bottom:   $p__margin-bottom;
 // adapting to different screen sizes, for use in media queries.
 
 $grid-breakpoints: (
-        xs: $screen__xs,
-        sm: $screen__s,
-        md: $screen__m,
-        lg: $screen__l,
-        xl: $screen__xl
+        xxxs: 0,
+        xxs:  $screen__xxs,
+        xs:   $screen__xs,
+        sm:   $screen__s,
+        md:   $screen__m,
+        lg:   $screen__l,
+        xl:   $screen__xl
 );
 
 // Grid containers
@@ -128,18 +130,25 @@ $grid-breakpoints: (
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
-        sm: $screen__xs - ($layout__width-xs-indent * 2),
+        sm: $screen__s - ($layout__width-xs-indent * 2),
         md: $screen__m - ($layout-indent__width * 2),
-        lg: $screen__l - ($layout-indent__width * 2),
+        lg: $layout__max-width,
         xl: $layout__max-width
 );
 
 // Grid columns
 //
 // Set the number of columns and specify the width of the gutters.
+@if($layout__width-xs-indent != $layout-indent__width) {
+  $grid-gutter-widths: (
+          lg: $layout-indent__width * 2
+  ) !default;
+}@else{
+  $grid-gutter-widths: () !default;
+}
 
 $grid-columns:                number($total-columns);
-$grid-gutter-width:           $gutter-width;
+$grid-gutter-width:           $layout__width-xs-indent * 2;
 $grid-row-columns:            6;
 
 // Components
@@ -296,9 +305,9 @@ $input-btn-font-family:       parse-font-family($button__font-family);
 $input-btn-font-size:         parse-font-size($button__font-size);
 $input-btn-line-height:       px-to-rem($button__line-height);
 
-$input-btn-focus-width:       0;
+$input-btn-focus-width:       nth($focus__box-shadow, 4);
 $input-btn-focus-color:       null;
-$input-btn-focus-box-shadow:  null;
+$input-btn-focus-box-shadow:  $focus__box-shadow;
 
 $_splitted-button-paddings-s: split-value($button__padding__s);
 $input-btn-padding-y-sm:      px-to-rem(map-get($_splitted-button-paddings-s, "top"));
@@ -322,7 +331,7 @@ $input-btn-border-width:      map-get(split-border($button__border), "width");
 //$btn-padding-x:               $input-btn-padding-x;
 //$btn-font-family:             $input-btn-font-family;
 $btn-font-size:               $input-btn-font-size;
-//$btn-line-height:             $input-btn-line-height;
+$btn-line-height:             $input-btn-line-height;
 //$btn-white-space:             null !default; // Set to `nowrap` to prevent text wrapping
 
 //$btn-padding-y-sm:            $input-btn-padding-y-sm;
@@ -450,7 +459,7 @@ $form-check-inline-input-margin-x:      map-get(split-value($form-field-type-inl
 //$custom-control-indicator-checked-box-shadow:   null !default;
 //$custom-control-indicator-checked-border-color: $custom-control-indicator-checked-bg !default;
 
-//$custom-control-indicator-focus-box-shadow:     $input-focus-box-shadow !default;
+$custom-control-indicator-focus-box-shadow:     $input-focus-box-shadow;
 //$custom-control-indicator-focus-border-color:   $input-focus-border-color !default;
 
 //$custom-control-indicator-active-color:         $component-active-color !default;
@@ -532,15 +541,15 @@ $custom-select-focus-border-color:  map-get(split-border($select__focus__border)
 //$custom-range-thumb-active-bg:               lighten($component-active-bg, 35%) !default;
 //$custom-range-thumb-disabled-bg:             $gray-500 !default;
 
-//$custom-file-height:                $input-height !default;
-//$custom-file-height-inner:          $input-height-inner !default;
+$custom-file-height:                $input-height;
+$custom-file-height-inner:          $custom-file-height - 2;
 //$custom-file-focus-border-color:    $input-focus-border-color !default;
 //$custom-file-focus-box-shadow:      $input-focus-box-shadow !default;
 //$custom-file-disabled-bg:           $input-disabled-bg !default;
 
 //$custom-file-padding-y:             $input-padding-y !default;
 //$custom-file-padding-x:             $input-padding-x !default;
-//$custom-file-line-height:           $input-line-height !default;
+$custom-file-line-height:           $custom-file-height-inner;
 //$custom-file-font-family:           $input-font-family !default;
 //$custom-file-font-weight:           $input-font-weight !default;
 //$custom-file-color:                 $input-color !default;
@@ -598,8 +607,8 @@ $zindex-tooltip:                    $tooltip__z-index;
 
 // Navs
 
-//$nav-link-padding-y:                .5rem !default;
-//$nav-link-padding-x:                1rem !default;
+$nav-link-padding-y: px-to-rem(map-get(split-value($nav-link__padding),'top'));
+$nav-link-padding-x: px-to-rem(map-get(split-value($nav-link__padding),'left'));
 //$nav-link-disabled-color:           $gray-600 !default;
 
 $nav-tabs-border-color:             $tab-control__border-color;
@@ -886,8 +895,8 @@ $alert-border-radius:               $message__border-radius;
 //$alert-link-font-weight:            $font-weight-bold !default;
 $alert-border-width:                $message__border-width;
 
-//$alert-bg-level:                    -10 !default;
-//$alert-border-level:                -9 !default;
+$alert-bg-level:                    0;
+$alert-border-level:                0;
 //$alert-color-level:                 6 !default;
 
 
