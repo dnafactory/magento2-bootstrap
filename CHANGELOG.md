@@ -1,3 +1,9 @@
+0.1.2
+=============
+* Added:
+  * _module.scss support
+  * magento style integration fixes
+
 0.1.1
 =============
 * Added:
