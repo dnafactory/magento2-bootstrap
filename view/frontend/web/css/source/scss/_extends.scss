@@ -19,22 +19,3 @@ button.action{
   outline: 0;
   @include transition($btn-transition);
 }
-
-@each $breakpoint, $gutter in $grid-gutter-widths {
-  @include media-breakpoint-up($breakpoint) {
-    .container,
-    .container-fluid{
-      @include make-container($gutter);
-    }
-    .container#{breakpoint-infix($breakpoint, $grid-gutter-widths)} {
-      @include make-container($gutter);
-    }
-    .row{
-      @include make-row($gutter);
-      & > .col,
-      & > [class*='col-']{
-        @include make-col-ready($gutter);
-      }
-    }
-  }
-}
