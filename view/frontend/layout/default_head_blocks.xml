@@ -2,6 +2,16 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <css src="DNAFactory_Bootstrap::css/critical.css" />
         <css src="DNAFactory_Bootstrap::css/bootstrap.css" />
     </head>
+    <body>
+        <referenceBlock name="head.additional">
+            <block name="critical_bootstrap_css_block" before="critical_css_block" template="Magento_Theme::html/header/criticalCss.phtml" ifconfig="dev/css/use_css_critical_path">
+                <arguments>
+                    <argument name="criticalCssViewModel" xsi:type="object">CriticalCssBootstrap</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
 </page>

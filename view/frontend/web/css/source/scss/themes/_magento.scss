@@ -139,14 +139,6 @@ $container-max-widths: (
 // Grid columns
 //
 // Set the number of columns and specify the width of the gutters.
-@if($layout__width-xs-indent != $layout-indent__width) {
-  $grid-gutter-widths: (
-          lg: $layout-indent__width * 2
-  ) !default;
-}@else{
-  $grid-gutter-widths: () !default;
-}
-
 $grid-columns:                number($total-columns);
 $grid-gutter-width:           $layout__width-xs-indent * 2;
 $grid-row-columns:            6;

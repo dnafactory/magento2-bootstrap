@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+* DNAFactory's blank theme uses a custom critical.css generator. So if Magento's css_critical_path where disabled,
+* those CSS rules would be lost.
+* This fallback layout update, prevents that kind of code loss.
+* @author Ciro Arcadio <ciro.arcadio@dnafactory.it>
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="DNAFactory_Bootstrap::css/critical.css"/>
+    </head>
+</page>
