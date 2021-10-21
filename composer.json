@@ -8,7 +8,8 @@
   ],
   "require": {
     "php": "~7.1|~7.2",
-    "dnafactory/module-scss": "^1.0"
+    "dnafactory/module-scss": "^1.0",
+    "dnafactory/module-critical": "^1.0|dev-develop"
   },
   "authors": [
     {

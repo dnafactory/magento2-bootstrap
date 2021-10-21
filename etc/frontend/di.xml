@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="CriticalCssBootstrap" type="Magento\Theme\Block\Html\Header\CriticalCss">
+    <virtualType name="CriticalCssBootstrap" type="DNAFactory\Critical\Block\Html\Header\CriticalCss">
         <arguments>
             <argument name="filePath" xsi:type="string">DNAFactory_Bootstrap::css/critical.css</argument>
         </arguments>
