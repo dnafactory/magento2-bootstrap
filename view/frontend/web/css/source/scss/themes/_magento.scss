@@ -134,8 +134,7 @@ $grid-breakpoints: (
 $container-max-widths: (
         sm: $screen__s - ($layout__width-xs-indent * 2),
         md: $screen__m - ($layout-indent__width * 2),
-        lg: $layout__max-width,
-        xl: $layout__max-width
+        lg: $layout__max-width
 );
 
 // Grid columns
