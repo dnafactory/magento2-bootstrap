@@ -136,6 +136,7 @@ $container-max-widths: (
         md: $screen__m - ($layout-indent__width * 2),
         lg: $layout__max-width
 );
+$container-max-widths: map-remove($container-max-widths, xl);
 
 // Grid columns
 //
