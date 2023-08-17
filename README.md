@@ -3,6 +3,8 @@
 [![Magento](https://img.shields.io/badge/Bootstrap-v4.5.3-blueviolet.svg?logo=bootstrap&&style=for-the-badge)](https://github.com/twbs/bootstrap)
 ======
 
+In [packagist](https://packagist.org/packages/jaroslawzielinski/magento2-bootstrap).
+
 This Magento 2 module provides a full integration of [Bootstrap 4](https://getbootstrap.com/) 's sources.
 
 **This is not a porting!**
